@@ -1,48 +1,90 @@
-import socket
-import platform
-import psutil
-import cpuinfo
-from colorama import Fore
+from colorama import init, Fore
 import os
+import time
+import importlib
 
-title = (Fore.RED) + """
-    • ▌ ▄ ·.  ▄· ▄▌     ▄▄▄· ▄▄· 
-    ·██ ▐███▪▐█▪██▌    ▐█ ▄█▐█ ▌▪
-    ▐█ ▌▐▌▐█·▐█▌▐█▪     ██▀·██ ▄▄
-    ██ ██▌▐█▌ ▐█▀·.    ▐█▪·•▐███▌
-    ▀▀  █▪▀▀▀  ▀ •     .▀   ·▀▀▀ 
-                            by wayas
+class WayasMenu:
+    def __init__(self):
+        # colorama
+        init(autoreset=True)
 
-""" + (Fore.RESET)
+        self.name_user = os.getlogin()
 
-def get_computer_name():
-    return socket.gethostname()
+        self.titulo_wayas = (Fore.RED +
+                              """   ▄▄▌ ▐ ▄▌ ▄▄▄·  ▄· ▄▌ ▄▄▄· .▄▄ · 
+    ██· █▌▐█▐█ ▀█ ▐█▪██▌▐█ ▀█ ▐█ ▀. 
+    ██▪▐█▐▐▌▄█▀▀█ ▐█▌▐█▪▄█▀▀█ ▄▀▀▀█▄
+    ▐█▌██▐█▌▐█ ▪▐▌ ▐█▀·.▐█ ▪▐▌▐█▄▪▐█
+     ▀▀▀▀ ▀▪ ▀  ▀   ▀ •  ▀  ▀  ▀▀▀▀""" +
+                              Fore.RESET)
 
-def get_ip_address():
-    return socket.gethostbyname(socket.gethostname())
+        self.options = ("""
+    1. Tools
+    2. About
+    3. Exit
+           
+           """)
 
-def get_cpu_info():
-    info = cpuinfo.get_cpu_info()
-    return info['brand_raw']
+        self.tools_options = ("""
+    1. NGL Spammer          
+    2. MyPC     
+         
+         """)
 
-def get_ram_info():
-    ram = psutil.virtual_memory()
-    return f"Total: {ram.total >> 30:.2f} GB, Disponible: {ram.available >> 30:.2f} GB"
+        self.options_yn = ("""
+    1. Yes
+    2. No
+    """)
 
-def get_os_info():
-    return f"Sistema Operativo: {platform.system()} {platform.version()}"
+    def show_menu(self):
+        os.system('cls')  
+        print("\n" + self.titulo_wayas + "\n")
+        print(self.options)
+        
+        option = input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> ")
+        
+        if option == "1":
+            self.show_tools_menu()
+        elif option == "2":
+            self.show_about()
+        elif option == "3":
+            exit()   
+        else:
+            print("Opción inválida")
+            time.sleep(1)
+            self.show_menu()
 
-def main():
-    os.system('cls')
-    print(title)
-    print(f"Nombre del ordenador: {get_computer_name()}")
-    print(f"Dirección IP: {get_ip_address()}")
-    print(f"CPU: {get_cpu_info()}")
-    print(f"RAM: {get_ram_info()}")
-    print(get_os_info())
-    input("\n" + "Preciona Enter para ir a Wayas" + "\n")
+    def show_tools_menu(self):
+        os.system('cls')
+        print("\n" + self.titulo_wayas + "\n")
+        print(self.tools_options)
+        
+        tool_option = input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> ")
+
+        if tool_option == "1":
+            os.system("python tools/ngl/spammer/NGLSpamer.py")
+        elif tool_option == "2":
+            os.system("python tools/mypc/main.py")
+        else:
+            print("Opción inválida")
+            time.sleep(1)
+            self.show_tools_menu()
+
+    def show_about(self):
+        os.system('cls')
+        credits_app = (f"""
+    Coded by {Fore.CYAN}AaronWayas{Fore.RESET}                  
+    With the help of: {Fore.CYAN}Codeium{Fore.RESET}
     
-    os.system("python C:/Users/aaron/OneDrive/Escritorio/Aaron/1/wayas.py")
+    Version: 1.0
+    Tools Count: {Fore.RED}2{Fore.RESET}              
+                  """)
+        
+        print("\n" + self.titulo_wayas + "\n")
+        print(credits_app)
+        input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> Press enter to continue...")
+        self.show_menu()
 
 if __name__ == "__main__":
-    main()
+    menu = WayasMenu()
+    menu.show_menu()

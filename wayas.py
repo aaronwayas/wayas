@@ -1,83 +1,120 @@
 from colorama import init, Fore
 import os
 import time
+import importlib
 
-nameUSer = os.getlogin()
+class WayasMenu:
+    def __init__(self):
+        # colorama
+        init(autoreset=True)
 
-# colorama
-init(autoreset=True)
+        self.name_user = os.getlogin()
 
-titulo_wayas = (Fore.RED +
-              """   ▄▄▌ ▐ ▄▌ ▄▄▄·  ▄· ▄▌ ▄▄▄· .▄▄ · 
+        self.titulo_wayas = (Fore.RED +
+                              """   ▄▄▌ ▐ ▄▌ ▄▄▄·  ▄· ▄▌ ▄▄▄· .▄▄ · 
     ██· █▌▐█▐█ ▀█ ▐█▪██▌▐█ ▀█ ▐█ ▀. 
     ██▪▐█▐▐▌▄█▀▀█ ▐█▌▐█▪▄█▀▀█ ▄▀▀▀█▄
     ▐█▌██▐█▌▐█ ▪▐▌ ▐█▀·.▐█ ▪▐▌▐█▄▪▐█
      ▀▀▀▀ ▀▪ ▀  ▀   ▀ •  ▀  ▀  ▀▀▀▀""" +
-              Fore.RESET)
+                              Fore.RESET)
 
-options = ("""
+        self.options = ("""
     1. Tools
     2. About
     3. Exit
            
-           """    ) 
+           """)
 
-toolsWayas = ("""
+        self.tools_options = ("""
     1. NGL Spammer          
     2. MyPC     
          
          """)
 
-def menuWayas():
-    os.system('cls')  
-    print("\n" + titulo_wayas + "\n")
-    print(options)
-    
-    option = input(f"{Fore.CYAN}{nameUSer}{Fore.RESET} >> ")
-    
-    if option == "1":
-        tools()
-    elif option == "2":
-        about()
-    elif option == "3":
-        exit()   
-    else:
-        print("Invalid option")
-        time.sleep(1)
-        menuWayas()
-        
- 
-def tools():    
-    os.system('cls')
-    print("\n" + titulo_wayas + "\n")
-    print(toolsWayas)
-    option = input(f"{Fore.CYAN}{nameUSer}{Fore.RESET} >> ")
-    
-    # All tools
-    # Tools
-    if option == "1":
-        os.system("python tools/ngl/spammer/NGLSpamer.py")
+        self.options_yn = ("""
+    1. Yes
+    2. No
+    """)
 
-    elif option == "2":
-        os.system("python tools/mypc/main.py")
-    
-    
-    # Tools
-    # Tools
-def about():
-    os.system('cls')
-    creditsApp = (f"""
+        self.dependencies = {
+            "requests": "Requests",
+            "pystyle": "Pystyle",
+            "socket": "Socket",
+            "platform": "Platform",
+            "psutil": "Psutil",
+            "cpuinfo": "Cpuinfo",
+            "colorama": "Colorama",
+            "os": "OS"
+            # Agrega aquí cualquier otra dependencia que puedas tener
+        }
+
+    def show_menu(self):
+        os.system('cls')  
+        print("\n" + self.titulo_wayas + "\n")
+        print(self.options)
+        
+        option = input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> ")
+        
+        if option == "1":
+            self.show_tools_menu()
+        elif option == "2":
+            self.show_about()
+        elif option == "3":
+            exit()   
+        else:
+            print("Opción inválida")
+            time.sleep(1)
+            self.show_menu()
+
+    def show_tools_menu(self):
+        os.system('cls')
+        print("\n" + self.titulo_wayas + "\n")
+        print(self.tools_options)
+        
+        tool_option = input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> ")
+
+        if tool_option == "1":
+            self.check_and_run_tool("requests", "NGLSpamer")
+        elif tool_option == "2":
+            self.check_and_run_tool("pystyle", "MyPC")
+        else:
+            print("Opción inválida")
+            time.sleep(1)
+            self.show_tools_menu()
+
+    def check_and_run_tool(self, dependency, tool_name):
+        if not self.check_dependency(dependency):
+            print(f"{dependency} no está instalado. ¿Deseas instalarlo? {self.options_yn}")
+            install_option = input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> ")
+            if install_option == "1":
+                os.system(f"pip install {dependency}")
+            else:
+                return
+        
+        os.system(f"python tools/{tool_name.lower()}/main.py")
+
+    def check_dependency(self, module_name):
+        try:
+            importlib.import_module(module_name)
+            return True
+        except ImportError:
+            return False
+
+    def show_about(self):
+        os.system('cls')
+        credits_app = (f"""
     Coded by {Fore.CYAN}AaronWayas{Fore.RESET}                  
     With the help of: {Fore.CYAN}Codeium{Fore.RESET}
     
     Version: 1.0
     Tools Count: {Fore.RED}2{Fore.RESET}              
                   """)
-    
-    print("\n" + titulo_wayas + "\n")
-    print(creditsApp)
-    input(f"{Fore.CYAN}{nameUSer}{Fore.RESET} >> Press enter to continue...")
-    menuWayas()
+        
+        print("\n" + self.titulo_wayas + "\n")
+        print(credits_app)
+        input(f"{Fore.CYAN}{self.name_user}{Fore.RESET} >> Press enter to continue...")
+        self.show_menu()
 
 if __name__ == "__main__":
-    menuWayas()
+    menu = WayasMenu()
+    menu.show_menu()
