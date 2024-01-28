@@ -1,7 +1,6 @@
 # Wayas
 
-Wayas es un programa diseñado para instalar y utilizar herramientas de cualquier tipo de manera fácil y eficiente.
-
+Wayas es un programa diseñado para instalar y utilizar herramientas de cualquier tipo de manera fácil y eficiente. Es un proyecto de aburrimiento, no dare actualizaciones ni mucho menos, gracias.
 ## Propietario del Proyecto
 
 El proyecto es propiedad de Aarón Wayas.
