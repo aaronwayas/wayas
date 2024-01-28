@@ -1,0 +1,5 @@
+rstr~=3.1.0
+requests~=2.27.1
+rich~=11.0.0
+tabulate~=0.8.9
+beautifulsoup4~=4.10.0

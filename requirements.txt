@@ -1,3 +1,7 @@
 requests
 pystyle
 colorama
+socket
+platform
+psutil
+cpuinfo
