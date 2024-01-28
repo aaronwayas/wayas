@@ -33,9 +33,7 @@ Para comenzar a utilizar Wayas, sigue estos sencillos pasos:
 
 Esto asegurará que todas las dependencias necesarias estén instaladas y listas para su uso.
 
-## Uso
-
-TODO: Agrega información sobre cómo utilizar y ejecutar Wayas. Proporciona ejemplos, comandos y cualquier configuración adicional necesaria.
+Su uso es muy sencillo
 
 ## Contribución
 
